@@ -25,7 +25,6 @@ public class CalculadoraVisor implements ActionListener {
 	
 	public CalculadoraVisor() {
 
-		// cear una nueva fuente 
 		displayFont = new Font("Dialogo", Font.PLAIN, 18);
 		
 		createFrame();
@@ -34,29 +33,28 @@ public class CalculadoraVisor implements ActionListener {
 		createButtonPanel();
 		createTabs();
 		
-		// crea un controlador nuevo para la calc
+
 		calcControl = new CalculadoraControlador();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
-		// crear los graficos para dibujar las lineas en el panel grafico
 		g = (Graphics2D) graphDisplayPanel.getGraphics();
 	}
 	
+
 	protected void createFrame() {
 		frame = new JFrame("Calculadora Grafica");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(1, 2));
 		frame.setSize(1250, 720);
 	}
-	
+
 	protected void createDisplayPanel() {
 		displayPanel = new JPanel();
 		displayPanel.setLayout(null);
 		frame.add(displayPanel, BorderLayout.WEST);
 		addToDisplayPanel();
 	}
-	
 
 	protected void createButtonPanel() {
 		buttonPanel = new JPanel();
@@ -65,7 +63,7 @@ public class CalculadoraVisor implements ActionListener {
 		addButtonsToButtonPanel();
 	}
 	
-	
+
 	protected void createGraphPanel() {
 		graphPanel = new JPanel();
 		graphPanel.setLayout(null);
@@ -75,10 +73,11 @@ public class CalculadoraVisor implements ActionListener {
 		
 	 }
 	
+
 	protected void createTabs() {
 		tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-		tabs.addTab("Ecuaciones", displayPanel);
-		tabs.addTab("Grafico", graphPanel);
+		tabs.addTab("Ecuacion", displayPanel);
+		tabs.addTab("Graf", graphPanel);
 		tabs.setVisible(true);
 		frame.add(tabs);
 		
@@ -88,8 +87,9 @@ public class CalculadoraVisor implements ActionListener {
 		frame.add(tabs);
 	}
 	
+
 	protected void addToDisplayPanel() {		
-		inputEquation = new JTextArea("Ingresa la Ecuacion aqui: ", 3, 5);
+		inputEquation = new JTextArea("Ingresa la ecuacion aqui: ", 3, 5);
 		inputEquation.setLineWrap(true);
 		inputEquation.setEditable(false);
 		inputEquation.setFont(displayFont);
@@ -103,7 +103,6 @@ public class CalculadoraVisor implements ActionListener {
 		equationDisplay.setBounds(0, 60, 600, 600);
 		displayPanel.add(equationDisplay);	 
 	}
-	
 
 	protected void addButtonsToButtonPanel() {
 		ArrayList<JButton> buttonList= new ArrayList<JButton>();
@@ -131,7 +130,7 @@ public class CalculadoraVisor implements ActionListener {
 		buttonList.add(power);
 		JButton squared = new JButton("x^2");
 		buttonList.add(squared);
-		JButton sqrt = new JButton("RaizC");
+		JButton sqrt = new JButton("sqrt");
 		buttonList.add(sqrt);
 
 		JButton four = new JButton(Integer.toString(4));
@@ -170,20 +169,19 @@ public class CalculadoraVisor implements ActionListener {
 		buttonList.add(x);
 		JButton enter = new JButton("Enter");
 		buttonList.add(enter);
-		JButton graph = new JButton("Graficar");
+		JButton graph = new JButton("Graf");
 		buttonList.add(graph);
 		
-
-		JButton delete = new JButton("Borrar");
+		JButton delete = new JButton("Delete");
 		buttonList.add(delete);
-		JButton clear = new JButton("Limpiar");
+		JButton clear = new JButton("Clear");
 		buttonList.add(clear);
-		JButton clearAll = new JButton("<html>"+"Limpiar"+"<br>"+"Todos"+"<html>");
+		JButton clearAll = new JButton("<html>"+"Clear"+"<br>"+"All"+"<html>");
 		buttonList.add(clearAll);
-		JButton clearGraph = new JButton("<html>"+"Limpiar"+"<br>"+"Grafica"+"<html>");
+		JButton clearGraph = new JButton("<html>"+"Clear"+"<br>"+"Graf"+"<html>");
 		buttonList.add(clearGraph);
 		
-		Font f = new Font("Dialogo", Font.PLAIN, 22);
+		Font f = new Font("Dialogue", Font.PLAIN, 22);
 		
 		for(int j = 0; j < buttonList.size(); j++){
 			JButton temp = buttonList.get(j);
@@ -194,9 +192,8 @@ public class CalculadoraVisor implements ActionListener {
 		}
 	}
 	
-
 	protected void addToGraphPanel() {
-		graphEquation = new JTextArea("Grafico: Y = ", 600, 50);
+		graphEquation = new JTextArea("Graf: Y = ", 600, 50);
 		graphEquation.setEditable(false);
 		graphEquation.setFont(displayFont);
 		graphEquation.setBounds(0, 0, 600, 50);
@@ -235,26 +232,24 @@ public class CalculadoraVisor implements ActionListener {
 				equationDisplay.append("\n");
 			}
 		}
-		else if (result.equals("Graph")) {
+		else if (result.equals("Graf")) {
 			if (graphDisplayPanel.isShowing()) {
-				String[] coordinates = calcControl.update("Graph");
+				String[] coordinates = calcControl.update("Graf");
 				drawPoints(coordinates);	
 			}
 		}
-		else if (result.equals("<html>"+"Limpiar"+"<br>"+"Todo"+"<html>")) {
+		else if (result.equals("<html>"+"Clear"+"<br>"+"All"+"<html>")) {
 			newText = calcControl.update(result);
 			inputEquation.setText(newText[0]);
 			graphEquation.setText(newText[0]);
-			equationDisplay.setText("ecuacion Previa: ");
+			equationDisplay.setText("Previous equations: ");
 		}
-
-		else if (result.equals("<html>"+"Limpiar"+"<br>"+"Grafico"+"<html>")) {
+		else if (result.equals("<html>"+"Clear"+"<br>"+"Graf"+"<html>")) {
 			if (graphDisplayPanel.isShowing()) {
 				clearGraph();
 				drawGrid();
 			}
 		}
-
 		else {
 			newText = calcControl.update(result);
 			inputEquation.setText(newText[0]);
@@ -267,7 +262,6 @@ public class CalculadoraVisor implements ActionListener {
 		g.setColor(Color.gray);
 		int boxSize = 30;
 		
-
 		for (int i=0; i<=20; i++) {
 			if (i%10==0) g.setStroke(new BasicStroke(3));
 			g.drawLine(boxSize*i, 0, boxSize*i, 600);
@@ -284,10 +278,7 @@ public class CalculadoraVisor implements ActionListener {
         	g.drawLine(j,300-Double.valueOf(coordinates[j]).intValue(),j+1,300-Double.valueOf(coordinates[j+1]).intValue());
         }
 	}
-	
-	/**
-	 * Borra todos las ecuacion que se han graficado
-	 */
+
 	public void clearGraph() {
 		g.clearRect(0,0,600,600);
 	}

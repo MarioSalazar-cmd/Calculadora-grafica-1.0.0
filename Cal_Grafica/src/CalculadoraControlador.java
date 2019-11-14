@@ -6,7 +6,7 @@ public class CalculadoraControlador {
     }
     
     public String[] update(String action) {
-		if (action.equals("Graph")) {
+		if (action.equals("Graf")) {
 			return calcModel.evaluarGraph();
 		}
 		return calcModel.performAction(action);
